@@ -1,11 +1,22 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavBar, Hero, About, Usage } from "../Components";
+import InfoIcon from "@material-ui/icons/Info";
+import Typography from "@material-ui/core/Typography";
+import { NavBar, Hero, About, Usage, Skills, Footer } from "../Components";
 
 const useStyles = makeStyles({
   root: {
     width: "100%",
     height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+  imp: {
+    height: "5vh",
+    marginBottom: "7vh",
+    width: "80vw",
+    alignSelf: "center",
+    textAlign: "center",
   },
 });
 
@@ -17,6 +28,16 @@ function Home() {
       <Hero />
       <About />
       <Usage />
+      <Skills />
+      <div className={classes.imp}>
+        {/* <InfoIcon style={{ color: "#ffc508" }} /> */}
+        <Typography variant="caption" color="textSecondary">
+          This application is build for development purpose which is mainly
+          being done on wide screen computers or tablets. For this reason the
+          user experience will not work properly in mobile devices.
+        </Typography>
+      </div>
+      <Footer />
     </div>
   );
 }

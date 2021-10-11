@@ -1,0 +1,35 @@
+#face-dev {
+  animation: top 3s infinite ease-in-out;
+}
+#hair-dev {
+  animation: top 3s infinite ease-in-out;
+}
+#headphone {
+  animation: top 3s infinite ease-in-out;
+}
+
+#headphone-right {
+  animation: top 3s infinite ease-in-out;
+}
+
+#headphone-left {
+  animation: top 3s infinite ease-in-out;
+}
+
+@keyframes top {
+  20% {
+    transform: rotate(1deg);
+  }
+  40% {
+    transform: rotate(-1deg);
+  }
+  60% {
+    transform: rotate(1deg);
+  }
+  80% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

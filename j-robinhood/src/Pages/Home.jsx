@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavBar } from "../Components";
+import { NavBar, Hero, About, Usage } from "../Components";
 
 const useStyles = makeStyles({
   root: {
@@ -12,8 +12,11 @@ const useStyles = makeStyles({
 function Home() {
   const classes = useStyles();
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className={classes.root}>
+      <NavBar />
+      <Hero />
+      <About />
+      <Usage />
     </div>
   );
 }

@@ -1,0 +1,51 @@
+#hand-left {
+  animation: hand 0.5s infinite 0.2s;
+}
+
+#hand-right {
+  animation: hand 0.5s infinite;
+}
+
+#hair {
+  animation: head 3s infinite;
+}
+
+#face {
+  animation: head 3s infinite;
+}
+
+@keyframes hand {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes head {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@media only screen and (max-width: 1020px) {
+  svg {
+    width: 250px;
+    height: 250px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  svg {
+    width: 150px;
+    height: 150px;
+  }
+}

@@ -8,6 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Footer } from "../Components";
 
+const focusedColor = "var(--green)";
+
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -36,7 +38,7 @@ const useStyles = makeStyles({
     cursor: "pointer",
     height: "9vh",
     "& img": {
-      height: "30%",
+      height: "40%",
     },
   },
   navBorder: {
@@ -70,6 +72,24 @@ const useStyles = makeStyles({
   input: {
     width: "100%",
     marginTop: "1.5rem",
+    // input label when focused
+    "& label.Mui-focused": {
+      color: focusedColor,
+    },
+    // focused color for input with variant='standard'
+    "& .MuiInput-underline:after": {
+      borderBottomColor: focusedColor,
+    },
+    // focused color for input with variant='filled'
+    "& .MuiFilledInput-underline:after": {
+      borderBottomColor: focusedColor,
+    },
+    // focused color for input with variant='outlined'
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderColor: focusedColor,
+      },
+    },
   },
   right: {
     display: "flex",
@@ -86,6 +106,14 @@ const useStyles = makeStyles({
   footer: {
     marginTop: "auto",
   },
+  "@media (max-width: 420px)": {
+    right: {
+      display: "none",
+    },
+    left: {
+      width: "80%",
+    },
+  },
 });
 
 function LogIn() {
@@ -96,14 +124,18 @@ function LogIn() {
     history.push("/");
   };
 
+  const gotoPalettePage = () => {
+    history.push("/palettes");
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.nav}>
         <div className={classes.navContent} onClick={gotoHome}>
           <img src={logo} alt="logo" />
-          <h3 className={classes.logoHeader}>
+          <h2 className={classes.logoHeader}>
             Jazzy <span style={{ color: "rgb(35, 153, 3)" }}>R</span>obinhood
-          </h3>
+          </h2>
         </div>
         <div className={classes.navBorder} />
       </div>
@@ -154,6 +186,7 @@ function LogIn() {
                 width: "100%",
                 border: "1px solid var(--green)",
               }}
+              onClick={gotoPalettePage}
             >
               Demo Log In
             </Button>
@@ -162,7 +195,7 @@ function LogIn() {
         <div className={classes.right}>
           <img src={security} alt="security" />
           <Typography variant="h6" style={{ marginBottom: "1rem" }}>
-            Free color nd palette making Simulation. Start creating your own
+            Free color and palette making Simulation. Start creating your own
             palette.
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">

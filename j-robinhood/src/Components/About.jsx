@@ -37,9 +37,9 @@ function About() {
         color="textSecondary"
         className={classes.content}
       >
-        Pick your colors save them and make your own color palette, use it to
-        design and develop your application, re-use the palette for your future
-        applications, edit the palette whenever you want.
+        Pick your colors save them and make your own color palettes, use them to
+        design and develop your application, re-use your palettes for your
+        future applications, edit your palettes whenever you want.
       </Typography>
     </div>
   );

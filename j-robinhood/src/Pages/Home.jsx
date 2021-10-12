@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
   },
   imp: {
-    height: "5vh",
+    height: "8vh",
     marginBottom: "7vh",
     width: "80vw",
     alignSelf: "center",
@@ -32,9 +32,9 @@ function Home() {
       <div className={classes.imp}>
         {/* <InfoIcon style={{ color: "#ffc508" }} /> */}
         <Typography variant="caption" color="textSecondary">
-          This application is build for development purpose which is mainly
-          being done on wide screen computers or tablets. For this reason the
-          user experience will not work properly in mobile devices.
+          This application helps developers to build their application which is
+          mainly being done on wide screen computers or tablets. For this reason
+          the user experience may break in mobile devices.
         </Typography>
       </div>
       <Footer />

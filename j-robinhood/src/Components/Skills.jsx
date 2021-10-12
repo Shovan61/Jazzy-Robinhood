@@ -5,7 +5,7 @@ import DeveloperSvg from "./DeveloperSvg";
 
 const useStyles = makeStyles({
   root: {
-    height: "60vh",
+    height: "55vh",
     backgroundColor: "#dafddf",
     marginBottom: "20vh",
     display: "flex",
@@ -38,7 +38,9 @@ function Skills() {
         </Typography>
         <Typography variant="subtitle1">
           Our goal is to reduce the extra effort while picking colors for
-          developing front-end applications.
+          developing front-end applications. This application will help you to
+          cut the unnecessary busy works which is to be done during front-end
+          application development.
         </Typography>
       </div>
     </div>

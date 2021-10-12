@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 import robinhood from "../Images/hero img.png";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -65,7 +66,12 @@ const useStyles = makeStyles({
 
 function Hero() {
   const classes = useStyles();
+  let history = useHistory();
   const [isHover, setisHover] = useState(false);
+
+  const getoLoginPage = () => {
+    history.push("/login");
+  };
 
   return (
     <div className={classes.root}>
@@ -73,9 +79,9 @@ function Hero() {
         <h1>Jazzy Robinhood</h1>
         <p>
           Tired of picking colors for application development from various sites
-          and unable to make your own pallet? Then you are on the right place.
+          and unable to make your own palette? Then you are on the right place.
           Jazzy Robinhood allows all Front-End developers and designers to make
-          their own palettes and reuse them.{" "}
+          their own color palettes and reuse them.{" "}
         </p>
         <Button
           variant="contained"
@@ -86,6 +92,7 @@ function Hero() {
           className={classes.btn}
           onMouseOver={() => setisHover(true)}
           onMouseLeave={() => setisHover(false)}
+          onClick={getoLoginPage}
         >
           DEMO
         </Button>

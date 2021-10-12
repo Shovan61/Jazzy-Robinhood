@@ -1,6 +1,6 @@
 import React from "react";
-import { Home, LogIn, PalletesPage } from "./Pages";
-import { Switch, Route, Link } from "react-router-dom";
+import { Home, LogIn, PalletesPage, Pallete } from "./Pages";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
         <Route exact path="/" render={() => <Home />}></Route>
         <Route exact path="/login" render={() => <LogIn />}></Route>
         <Route exact path="/palettes" render={() => <PalletesPage />}></Route>
+        <Route exact path="/palette" render={() => <Pallete />}></Route>
       </Switch>
     </div>
   );

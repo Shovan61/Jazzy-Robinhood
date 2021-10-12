@@ -120,6 +120,8 @@ function LogIn() {
   const classes = useStyles();
   let history = useHistory();
 
+  //   console.log(generatePalette(mtColorArr[0]));
+
   const gotoHome = () => {
     history.push("/");
   };

@@ -4,8 +4,6 @@ import logo from "../Images/clipart3126853.png";
 import TextField from "@material-ui/core/TextField";
 import { Footer } from "../Components";
 
-const focusedColor = "var(--green)";
-
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -22,7 +20,7 @@ const useStyles = makeStyles({
     alignSelf: "center",
     width: "100%",
     "& img": {
-      height: "30%",
+      height: "25%",
       cursor: "pointer",
     },
   },

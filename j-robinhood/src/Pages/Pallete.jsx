@@ -5,12 +5,11 @@ import "./Palette.css";
 
 function Pallete() {
   const { paletteBox, isFilledBox } = useGlobalContext();
-  console.log(paletteBox);
 
   if (isFilledBox) {
     return (
       <div>
-        <h1>{paletteBox[0].paletteName}</h1>
+        <h1></h1>
       </div>
     );
   } else {

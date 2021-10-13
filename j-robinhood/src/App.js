@@ -9,7 +9,7 @@ function App() {
         <Route exact path="/" render={() => <Home />}></Route>
         <Route exact path="/login" render={() => <LogIn />}></Route>
         <Route exact path="/palettes" render={() => <PalletesPage />}></Route>
-        <Route exact path="/palette" render={() => <Pallete />}></Route>
+        <Route exact path="/palette/:id" render={() => <Pallete />}></Route>
       </Switch>
     </div>
   );

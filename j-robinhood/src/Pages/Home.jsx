@@ -34,7 +34,7 @@ function Home() {
         <Typography variant="caption" color="textSecondary">
           This application helps developers to build their application which is
           mainly being done on wide screen computers or tablets. For this reason
-          the user experience may break in mobile devices.
+          the user experience may break on mobile devices.
         </Typography>
       </div>
       <Footer />

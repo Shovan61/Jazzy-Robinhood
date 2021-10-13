@@ -6,11 +6,12 @@ import DeveloperSvg from "./DeveloperSvg";
 const useStyles = makeStyles({
   root: {
     height: "55vh",
-    backgroundColor: "#dafddf",
+    backgroundColor: "#222",
     marginBottom: "20vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
+    color: "white",
   },
   left: {
     width: "30%",

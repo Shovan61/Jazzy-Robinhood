@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: "#dafddf",
+    backgroundColor: "#222",
   },
   service: {
     display: "flex",
@@ -47,6 +47,9 @@ const useStyles = makeStyles({
   leftHowto: {
     display: "flex",
     alignItems: "center",
+    "& h4": {
+      letterSpacing: "4px",
+    },
   },
   "@media (max-width: 1020px)": {
     svg: {
@@ -58,6 +61,7 @@ const useStyles = makeStyles({
   },
   subtitle: {
     textAlign: "center",
+    color: "white",
   },
   "@media (max-width: 530px)": {
     svg: {
@@ -84,7 +88,9 @@ function Usage() {
       <div className={classes.services}>
         {services.map((cur, i) => (
           <div className={classes.service} key={i}>
-            <Typography variant="h6">{cur.title}</Typography>
+            <Typography variant="h6" style={{ color: "white" }}>
+              {cur.title}
+            </Typography>
             <Typography
               className={classes.subtitle}
               variant="subtitle2"

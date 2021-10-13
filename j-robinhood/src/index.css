@@ -10,6 +10,7 @@
 body {
   font-family: "Roboto", sans-serif;
   --green: rgb(100, 206, 128);
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {

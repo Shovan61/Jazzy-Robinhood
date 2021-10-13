@@ -5,5 +5,6 @@ import Usage from "./Usage";
 import GuySvg from "./GuySvg";
 import Skills from "./Skills";
 import Footer from "./Footer";
+import MiniColorPalette from "./MiniColorPalette";
 
-export { NavBar, Hero, About, Usage, GuySvg, Skills, Footer };
+export { NavBar, Hero, About, Usage, GuySvg, Skills, Footer, MiniColorPalette };

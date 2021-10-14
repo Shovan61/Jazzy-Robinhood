@@ -12,6 +12,8 @@ const useStyles = makeStyles({
   },
   creator: {
     height: "3vh",
+    // backgroundColor: "white",
+    // width: "10vw",
   },
   card: {
     width: "100%",
@@ -50,9 +52,7 @@ function Footer() {
     <div className={classes.root}>
       {isHover && (
         <div className={classes.creator}>
-          <Typography variant="h6" color="primaty">
-            Creator
-          </Typography>
+          <Typography variant="h6">Creator</Typography>
         </div>
       )}
 

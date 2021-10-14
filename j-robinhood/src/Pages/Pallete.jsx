@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { Footer, PaletteColorBox } from "../Components";
 import { useHistory } from "react-router-dom";
+import Slider from "@material-ui/core/Slider";
 
 const useStyles = makeStyles({
   root: {
@@ -43,6 +44,12 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  slider: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    height: "100%",
   },
 });
 
@@ -96,7 +103,11 @@ function Pallete() {
             <Typography variant="h6">{palette.paletteName}</Typography>
           </div>
           <div className={classes.slider}>
-            <h1>slider</h1>
+            <span>Level:</span>
+            <Slider
+              defaultValue={500}
+              style={{ width: "15rem", marginLeft: "2rem" }}
+            />
           </div>
           <div className={classes.buttonContainer}>
             <Button

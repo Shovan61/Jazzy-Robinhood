@@ -129,7 +129,9 @@ function PaletteColorBox(props) {
         text={selectVal === "rgb" ? rgb : selectVal === "hex" ? hex : rgba}
         onCopy={handleClick}
       >
-        <div className={classes.btn}>Copy</div>
+        <div className={classes.btn} style={{ color: color }}>
+          Copy
+        </div>
       </CopyToClipboard>
     </div>
   );

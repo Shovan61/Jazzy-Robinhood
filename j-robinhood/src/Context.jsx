@@ -8,6 +8,7 @@ export const GlobalProvider = ({ children }) => {
   const [state, setstate] = useState({
     paletteBox: [],
     isFilledBox: false,
+    currentClickedColor: null,
   });
 
   useEffect(() => {
@@ -22,9 +23,20 @@ export const GlobalProvider = ({ children }) => {
     }
   }, []);
 
+  const setCurrentColor = (color) => {
+    setstate((prev) => {
+      return { ...prev, currentClickedColor: color };
+    });
+  };
+
   return (
     <GlobalContext.Provider
-      value={{ paletteBox: state.paletteBox, isFilledBox: state.isFilledBox }}
+      value={{
+        paletteBox: state.paletteBox,
+        isFilledBox: state.isFilledBox,
+        setCurrentColor,
+        currentClickedColor: state.currentClickedColor,
+      }}
     >
       {children}
     </GlobalContext.Provider>

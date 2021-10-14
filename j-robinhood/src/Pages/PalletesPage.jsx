@@ -43,7 +43,7 @@ const useStyles = makeStyles({
   input: {
     marginLeft: "1rem",
     height: "2rem",
-    width: "20%",
+    width: "13rem",
     border: "1px solid #e3e1e1",
     borderRadius: "10px",
     padding: "0.3rem",

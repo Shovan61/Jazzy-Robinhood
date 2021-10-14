@@ -6,5 +6,16 @@ import GuySvg from "./GuySvg";
 import Skills from "./Skills";
 import Footer from "./Footer";
 import MiniColorPalette from "./MiniColorPalette";
+import PaletteColorBox from "./PaletteColorBox";
 
-export { NavBar, Hero, About, Usage, GuySvg, Skills, Footer, MiniColorPalette };
+export {
+  NavBar,
+  Hero,
+  About,
+  Usage,
+  GuySvg,
+  Skills,
+  Footer,
+  MiniColorPalette,
+  PaletteColorBox,
+};

@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -10,6 +11,9 @@ const useStyles = makeStyles({
     borderRadius: "10px",
     cursor: "pointer",
     boxShadow: "0.1rem 0.1rem 0.2rem #ddd, -0.1rem -0.1rem 0.2rem #eee",
+    "&:active": {
+      boxShadow: "none",
+    },
   },
   colorPalette: {
     height: "80%",
@@ -32,10 +36,15 @@ const useStyles = makeStyles({
 function MiniColorPalette(props) {
   const classes = useStyles();
   const { paletteName, id, emoji, colors } = props;
+  let history = useHistory();
   console.log(props);
 
+  const gotoPalettePage = () => {
+    history.push(`/palette/${id}`);
+  };
+
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={gotoPalettePage}>
       <div className={classes.colorPalette}>
         {colors[500].map((cur, i) => (
           <div

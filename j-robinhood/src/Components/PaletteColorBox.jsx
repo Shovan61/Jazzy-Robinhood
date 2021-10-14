@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "../Context";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import chroma from "chroma-js";
 import { makeStyles } from "@material-ui/core/styles";
 import "./PaletteColorBox.css";
 
@@ -11,9 +12,13 @@ const useStyles = makeStyles({
     position: "relative",
     display: "flex",
     justifyContent: "space-between",
+    "&:hover div": {
+      display: "block",
+    },
   },
   name: {
     alignSelf: "end",
+    fontSize: "12px",
   },
   view: {
     alignSelf: "flex-end",
@@ -25,11 +30,15 @@ const useStyles = makeStyles({
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     cursor: "pointer",
   },
+  color: {
+    position: "absolute",
+    fontSize: "12px",
+  },
   btn: {
     backgroundColor: "rgba(255, 255, 255, 0.3)",
     borderRadius: "15px",
     fontSize: "14px",
-    display: "inline-block",
+    display: "none",
     cursor: "pointer",
     color: "black",
     padding: "6px 15px",
@@ -39,7 +48,7 @@ const useStyles = makeStyles({
     left: "50%",
     top: "50%",
     transform: "translate(-50%, -50%)",
-    transition: "all 0.1s ease-in-out",
+    transition: "all 2s ease-in-out",
     "&:active": {
       top: "51%",
     },
@@ -54,7 +63,6 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     zIndex: "50",
-
     "& h1": {
       fontSize: "4rem",
       fontWeight: "400",
@@ -69,9 +77,12 @@ const useStyles = makeStyles({
 function PaletteColorBox(props) {
   const classes = useStyles();
   const { setCurrentColor } = useGlobalContext();
-  const { name, id, hex } = props;
+  const { name, id, hex, rgb, rgba, selectVal } = props;
+  console.log(props);
   const [isCopied, setisCopied] = useState(false);
   const [currentColor, setcurrentColor] = useState("");
+
+  let color = chroma(hex).luminance() < 0.3 ? "white" : "black";
 
   useEffect(() => {
     let timer;
@@ -91,8 +102,15 @@ function PaletteColorBox(props) {
 
   return (
     <div className={classes.root} style={{ backgroundColor: hex }}>
-      <span className={classes.name}>{name}</span>
-      <span className={classes.view}>View More</span>
+      <span className={classes.name} style={{ color: color }}>
+        {name}
+      </span>
+      <span className={classes.view} style={{ color: color }}>
+        View More
+      </span>
+      <span className={classes.color} style={{ color: color }}>
+        {selectVal === "rgb" ? rgb : selectVal === "hex" ? hex : rgba}
+      </span>
       <div
         className={`grow ${isCopied ? "active" : ""}`}
         style={{ backgroundColor: hex }}
@@ -100,12 +118,17 @@ function PaletteColorBox(props) {
 
       {isCopied && (
         <div className={classes.content}>
-          <h1>Copied!</h1>
-          <span>{hex}</span>
+          <h1 style={{ color: color }}>Copied!</h1>
+          <span style={{ color: color }}>
+            {selectVal === "rgb" ? rgb : selectVal === "hex" ? hex : rgba}
+          </span>
         </div>
       )}
 
-      <CopyToClipboard text={hex} onCopy={handleClick}>
+      <CopyToClipboard
+        text={selectVal === "rgb" ? rgb : selectVal === "hex" ? hex : rgba}
+        onCopy={handleClick}
+      >
         <div className={classes.btn}>Copy</div>
       </CopyToClipboard>
     </div>

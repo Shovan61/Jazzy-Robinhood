@@ -55,7 +55,7 @@ function MiniColorPalette(props) {
         ))}
       </div>
       <div className={classes.content}>
-        <span>{paletteName}</span>
+        <span style={{ fontSize: "14px" }}>{paletteName}</span>
         <span>{emoji}</span>
       </div>
     </Card>

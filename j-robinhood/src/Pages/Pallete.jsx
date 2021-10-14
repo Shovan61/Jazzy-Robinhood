@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import { Footer, PaletteColorBox } from "../Components";
 import { useHistory } from "react-router-dom";
 import Slider from "@material-ui/core/Slider";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +20,7 @@ const useStyles = makeStyles({
   nav: {
     height: "8vh",
     display: "grid",
-    gridTemplateColumns: "25rem auto 10rem",
+    gridTemplateColumns: "25rem auto 20rem",
     backgroundColor: "white",
   },
   icon: {
@@ -43,7 +45,7 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
   slider: {
     display: "flex",
@@ -60,6 +62,7 @@ function Pallete() {
   let history = useHistory();
   const [palette, setpalette] = useState({});
   const [level, setlevel] = useState(500);
+  const [selectVal, setselectVal] = useState("hex");
   const [singleShade, setsingleShade] = useState([]);
 
   useEffect(() => {
@@ -92,6 +95,14 @@ function Pallete() {
     history.push("/palettes");
   };
 
+  const handleSliderChange = (event, newValue) => {
+    setlevel(newValue);
+  };
+
+  const handleSelectChange = (e) => {
+    setselectVal(e.target.value);
+  };
+
   if (!isFilledBox) {
     return <div>...Loading</div>;
   } else {
@@ -105,11 +116,21 @@ function Pallete() {
           <div className={classes.slider}>
             <span>Level:</span>
             <Slider
-              defaultValue={500}
+              defaultValue={level}
+              step={100}
+              min={100}
+              max={900}
+              marks
+              onChange={handleSliderChange}
               style={{ width: "15rem", marginLeft: "2rem" }}
             />
           </div>
           <div className={classes.buttonContainer}>
+            <Select value={selectVal} onChange={handleSelectChange}>
+              <MenuItem value="hex">HEX</MenuItem>
+              <MenuItem value="rgb">RGB</MenuItem>
+              <MenuItem value="rgba">RGBA</MenuItem>
+            </Select>
             <Button
               className={classes.btn}
               variant="outlined"
@@ -121,7 +142,15 @@ function Pallete() {
         </nav>
         <div className={classes.container}>
           {singleShade.map((cur, i) => (
-            <PaletteColorBox key={i} {...cur} />
+            <PaletteColorBox
+              key={i}
+              name={cur.name}
+              id={cur.id}
+              hex={cur.hex}
+              rgb={cur.rgb}
+              rgba={cur.rgba}
+              selectVal={selectVal}
+            />
           ))}
         </div>
         {/* Footer */}

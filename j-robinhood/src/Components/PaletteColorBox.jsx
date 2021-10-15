@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "../Context";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import chroma from "chroma-js";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import "./PaletteColorBox.css";
 
@@ -48,7 +49,6 @@ const useStyles = makeStyles({
     left: "50%",
     top: "50%",
     transform: "translate(-50%, -50%)",
-    transition: "all 2s ease-in-out",
     "&:active": {
       top: "51%",
     },
@@ -78,9 +78,8 @@ function PaletteColorBox(props) {
   const classes = useStyles();
   const { setCurrentColor } = useGlobalContext();
   const { name, id, hex, rgb, rgba, selectVal } = props;
-  console.log(props);
   const [isCopied, setisCopied] = useState(false);
-  const [currentColor, setcurrentColor] = useState("");
+  let history = useHistory();
 
   let color = chroma(hex).luminance() < 0.3 ? "white" : "black";
 
@@ -100,12 +99,21 @@ function PaletteColorBox(props) {
     setisCopied(true);
   };
 
+  const gotoColorShadePage = () => {
+    history.push(`/colorshade/${id}`);
+    setCurrentColor(hex);
+  };
+
   return (
     <div className={classes.root} style={{ backgroundColor: hex }}>
       <span className={classes.name} style={{ color: color }}>
         {name}
       </span>
-      <span className={classes.view} style={{ color: color }}>
+      <span
+        className={classes.view}
+        style={{ color: color }}
+        onClick={gotoColorShadePage}
+      >
         View More
       </span>
       <span className={classes.color} style={{ color: color }}>
@@ -118,7 +126,7 @@ function PaletteColorBox(props) {
 
       {isCopied && (
         <div className={classes.content}>
-          <h1 style={{ color: color }}>Copied!</h1>
+          <h1 style={{ color: color }}>Copied To Clipboard!</h1>
           <span style={{ color: color }}>
             {selectVal === "rgb" ? rgb : selectVal === "hex" ? hex : rgba}
           </span>

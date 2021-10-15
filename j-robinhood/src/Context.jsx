@@ -24,9 +24,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   const setCurrentColor = (color) => {
-    setstate((prev) => {
-      return { ...prev, currentClickedColor: color };
-    });
+    window.localStorage.setItem("color", JSON.stringify(color));
   };
 
   return (

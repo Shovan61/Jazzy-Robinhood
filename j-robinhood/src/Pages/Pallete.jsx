@@ -150,6 +150,7 @@ function Pallete() {
               rgb={cur.rgb}
               rgba={cur.rgba}
               selectVal={selectVal}
+              paletteId={id}
             />
           ))}
         </div>

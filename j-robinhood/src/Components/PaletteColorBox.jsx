@@ -30,6 +30,8 @@ const useStyles = makeStyles({
     marginRight: "0.2rem",
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     cursor: "pointer",
+    position: "relative",
+    zIndex: "10",
   },
   color: {
     position: "absolute",
@@ -77,7 +79,8 @@ const useStyles = makeStyles({
 function PaletteColorBox(props) {
   const classes = useStyles();
   const { setCurrentColor } = useGlobalContext();
-  const { name, id, hex, rgb, rgba, selectVal } = props;
+  const { name, id, hex, rgb, rgba, selectVal, paletteId, isSingleShade } =
+    props;
   const [isCopied, setisCopied] = useState(false);
   let history = useHistory();
 
@@ -101,29 +104,46 @@ function PaletteColorBox(props) {
 
   const gotoColorShadePage = () => {
     history.push(`/colorshade/${id}`);
-    setCurrentColor(hex);
+    setCurrentColor(hex, name, paletteId);
   };
 
   return (
-    <div className={classes.root} style={{ backgroundColor: hex }}>
-      <span className={classes.name} style={{ color: color }}>
-        {name}
-      </span>
-      <span
-        className={classes.view}
-        style={{ color: color }}
-        onClick={gotoColorShadePage}
-      >
-        View More
-      </span>
+    <div
+      className={classes.root}
+      style={{
+        backgroundColor: hex,
+        height: isSingleShade ? "34.5%" : "25.9%",
+        width: isSingleShade ? "25%" : "20%",
+      }}
+    >
       <span className={classes.color} style={{ color: color }}>
         {selectVal === "rgb" ? rgb : selectVal === "hex" ? hex : rgba}
       </span>
+
+      {/* Name */}
+      {!isSingleShade && (
+        <span className={classes.name} style={{ color: color }}>
+          {name}
+        </span>
+      )}
+
+      {!isSingleShade && (
+        <span
+          className={classes.view}
+          style={{ color: color }}
+          onClick={gotoColorShadePage}
+        >
+          View More
+        </span>
+      )}
+
+      {/* background grow */}
       <div
         className={`grow ${isCopied ? "active" : ""}`}
         style={{ backgroundColor: hex }}
       />
 
+      {/* background text while growed */}
       {isCopied && (
         <div className={classes.content}>
           <h1 style={{ color: color }}>Copied To Clipboard!</h1>

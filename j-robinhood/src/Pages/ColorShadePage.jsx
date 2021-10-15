@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useGlobalContext } from "../Context";
-import { useParams } from "react-router-dom";
-import { Footer } from "../Components";
+import { useHistory } from "react-router-dom";
+import { Footer, PaletteColorBox } from "../Components";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import chroma from "chroma-js";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -20,38 +21,60 @@ const useStyles = makeStyles({
   },
   nav: {
     height: "8vh",
-    display: "grid",
-    gridTemplateColumns: "25rem auto 20rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingLeft: "2rem",
+    paddingRight: "2rem",
     backgroundColor: "white",
+  },
+  btn: {
+    border: "1px solid var(--green)",
+  },
+  container: {
+    width: "100%",
+    height: "82vh",
+    display: "flex",
+    flexWrap: "wrap",
   },
 });
 
 function ColorShadePage() {
   const classes = useStyles();
   const { paletteBox } = useGlobalContext();
-  const { id } = useParams();
+  let history = useHistory();
   const [shadeArr, setshadeArr] = useState(null);
+  const [colorName, setcolorName] = useState(null);
+  const [pId, setpId] = useState(null);
+  const [culur, setculur] = useState(null);
 
   useEffect(() => {
     createShades();
   }, []);
 
-  const createShades = () => {
-    let col = JSON.parse(window.localStorage.getItem("color"));
+  const gotoPalettePage = () => {
+    history.push(`/palette/${pId}`);
+  };
 
-    const one = chroma(col).brighten(1.8).hex();
-    const two = chroma(col).brighten(1.6).hex();
-    const three = chroma(col).brighten(1.4).hex();
-    const four = chroma(col).brighten(1.2).hex();
-    const five = chroma(col).brighten(1).hex();
-    const six = chroma(col).darken(1).hex();
-    const seven = chroma(col).darken(1.2).hex();
-    const eight = chroma(col).darken(1.4).hex();
-    const nine = chroma(col).darken(1.6).hex();
-    const ten = chroma(col).darken(1.8).hex();
+  const createShades = () => {
+    let info = JSON.parse(window.localStorage.getItem("color"));
+    const { color, name, paletteId } = info;
+    const one = chroma(color).brighten(1).hex();
+    const two = chroma(color).brighten(0.5).hex();
+    const three = chroma(color).brighten(0.2).hex();
+    const four = chroma(color).darken(0.2).hex();
+    const five = chroma(color).darken(0.5).hex();
+    const six = chroma(color).darken(0.8).hex();
+    const seven = chroma(color).darken(1.1).hex();
+    const eight = chroma(color).darken(1.3).hex();
+    const nine = chroma(color).darken(1.6).hex();
+    const ten = chroma(color).darken(1.8).hex();
     const arr = [one, two, three, four, five, six, seven, eight, nine, ten];
 
     setshadeArr(arr);
+    setcolorName(name.toUpperCase());
+    setpId(paletteId);
+    setculur(color);
   };
 
   if (!shadeArr) {
@@ -59,7 +82,33 @@ function ColorShadePage() {
   } else {
     return (
       <div className={classes.root}>
-        <h1>{shadeArr}</h1>
+        <nav className={classes.nav}>
+          <Typography variant="h6">{colorName}</Typography>
+
+          <Button
+            className={classes.btn}
+            variant="outlined"
+            onClick={gotoPalettePage}
+          >
+            back
+          </Button>
+        </nav>
+
+        {/* color container */}
+        <div className={classes.container}>
+          {shadeArr.map((cur, i) => (
+            <PaletteColorBox
+              key={i}
+              name={cur}
+              id={i}
+              hex={cur}
+              rgb={cur}
+              rgba={cur}
+              isSingleShade
+            />
+          ))}
+        </div>
+
         <div className={classes.footer}>
           <Footer />
         </div>

@@ -1,5 +1,12 @@
 import React from "react";
-import { Home, LogIn, PalletesPage, Pallete, ColorShadePage } from "./Pages";
+import {
+  Home,
+  LogIn,
+  PalletesPage,
+  Pallete,
+  ColorShadePage,
+  CreatePalettePage,
+} from "./Pages";
 import { Switch, Route } from "react-router-dom";
 
 function App() {
@@ -14,6 +21,11 @@ function App() {
           exact
           path="/colorshade/:id"
           render={() => <ColorShadePage />}
+        ></Route>
+        <Route
+          exact
+          path="/createpalette"
+          render={() => <CreatePalettePage />}
         ></Route>
       </Switch>
     </div>

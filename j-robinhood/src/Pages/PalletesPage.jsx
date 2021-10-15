@@ -112,6 +112,10 @@ function PalletesPage() {
     history.push("/");
   };
 
+  const gotoCreatePalettePage = () => {
+    history.push("/createpalette");
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.nav}>
@@ -119,7 +123,11 @@ function PalletesPage() {
           <img src={logo} alt="logo" />
           <input type="text" className={classes.input} placeholder="Search" />
         </div>
-        <Button className={classes.btnCreate} variant="outlined">
+        <Button
+          className={classes.btnCreate}
+          variant="outlined"
+          onClick={gotoCreatePalettePage}
+        >
           Create palette
         </Button>
         <Button className={classes.btn} variant="outlined" onClick={gotoHome}>

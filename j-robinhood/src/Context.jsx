@@ -23,8 +23,14 @@ export const GlobalProvider = ({ children }) => {
     }
   }, []);
 
-  const setCurrentColor = (color) => {
-    window.localStorage.setItem("color", JSON.stringify(color));
+  const setCurrentColor = (color, name, paletteId) => {
+    let info = {
+      name: name,
+      color: color,
+      paletteId,
+    };
+
+    window.localStorage.setItem("color", JSON.stringify(info));
   };
 
   return (

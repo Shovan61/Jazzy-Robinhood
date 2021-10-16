@@ -26,13 +26,14 @@ const useStyles = makeStyles({
     right: "5px",
     cursor: "pointer",
     transition: "all 0.2s ease-in",
+
     "&:hover": {
       transform: "scale(1.05)",
     },
   },
 });
 
-function CreatePaletteColorBox({ name, id, color }) {
+function CreatePaletteColorBox({ name, id, color, removeColor }) {
   const classes = useStyles();
   let backgroundColor = chroma(color).luminance() < 0.3 ? "white" : "black";
 
@@ -43,7 +44,10 @@ function CreatePaletteColorBox({ name, id, color }) {
         {color}
       </span>
       <span className={classes.btn}>
-        <DeleteIcon style={{ color: backgroundColor }} />
+        <DeleteIcon
+          style={{ color: backgroundColor }}
+          onClick={() => removeColor(id)}
+        />
       </span>
     </div>
   );

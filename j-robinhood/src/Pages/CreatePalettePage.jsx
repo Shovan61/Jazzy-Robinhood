@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    height: "7vh",
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    height: "7vh",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -140,9 +140,16 @@ export default function PersistentDrawerLeft() {
   const [colorArray, setcolorArray] = useState([]);
   const [colorName, setcolorName] = useState("");
   const [isDisabled, setisDisabled] = useState(false);
+  const [isError, setisError] = useState(false);
+  const [isSameColor, setisSameColor] = useState(false);
+
+  useEffect(() => {
+    colorValidator();
+  }, [currentColor, colorArray]);
 
   useEffect(() => {
     checkColorName();
+    colorNameValidator();
   }, [colorName]);
 
   const checkColorName = () => {
@@ -186,7 +193,37 @@ export default function PersistentDrawerLeft() {
     }
   };
 
-  console.log(colorName);
+  const colorNameValidator = () => {
+    let allColorNames = colorArray.map((cur) => cur.name);
+
+    allColorNames.forEach((cur) => {
+      if (cur.toLowerCase().trim() === colorName.toLowerCase().trim()) {
+        setisError(true);
+      } else {
+        setisError(false);
+      }
+    });
+  };
+
+  const colorValidator = () => {
+    let allColors = colorArray.map((cur) => cur.color);
+
+    allColors.forEach((cur) => {
+      if (cur === currentColor) {
+        setisSameColor(true);
+      } else {
+        setisSameColor(false);
+      }
+    });
+  };
+
+  const removeColor = (id) => {
+    let newColorArray = colorArray.filter((cur) => cur.id !== id);
+
+    setcolorArray(newColorArray);
+  };
+
+  // console.log(currentColor);
 
   return (
     <div className={classes.root}>
@@ -264,11 +301,25 @@ export default function PersistentDrawerLeft() {
           <ChromePicker color={currentColor} onChange={handleColorChange} />
         </div>
 
+        {isSameColor && (
+          <span
+            style={{
+              fontSize: "11px",
+              color: "red",
+              alignSelf: "center",
+              marginTop: "2rem",
+            }}
+          >
+            This Color exists in the palette
+          </span>
+        )}
+
         {/* Name of color */}
         <div className={classes.colName}>
           <TextField
+            error={isError}
             id="name"
-            label="Color Name"
+            label={isError ? "Name already taken" : "Color Name"}
             fullWidth
             className={classes.textField}
             value={colorName}
@@ -283,7 +334,7 @@ export default function PersistentDrawerLeft() {
             variant="outlined"
             fullWidth
             onClick={handleAddColor}
-            disabled={isDisabled}
+            disabled={isDisabled || isError || isSameColor}
           >
             Add Color
           </Button>
@@ -300,7 +351,11 @@ export default function PersistentDrawerLeft() {
 
         <div className={classes.paletteContainer}>
           {colorArray.map((cur) => (
-            <CreatePaletteColorBox {...cur} key={cur.id} />
+            <CreatePaletteColorBox
+              {...cur}
+              key={cur.id}
+              removeColor={removeColor}
+            />
           ))}
         </div>
       </main>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -12,9 +12,11 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { ChromePicker } from "react-color";
+import TextField from "@material-ui/core/TextField";
 
 const drawerWidth = 300;
+const focusedColor = "var(--green)";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    display: "flex",
+    flexDirection: "column",
   },
   drawerPaper: {
     width: drawerWidth,
@@ -81,6 +85,35 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     border: "1px solid var(--green)",
   },
+  colorpicker: {
+    alignSelf: "center",
+    marginTop: "1.5rem",
+  },
+  colName: {
+    marginTop: "2rem",
+    width: "75%",
+    alignSelf: "center",
+  },
+  textField: {
+    // input label when focused
+    "& label.Mui-focused": {
+      color: focusedColor,
+    },
+    // focused color for input with variant='standard'
+    "& .MuiInput-underline:after": {
+      borderBottomColor: focusedColor,
+    },
+    // focused color for input with variant='filled'
+    "& .MuiFilledInput-underline:after": {
+      borderBottomColor: focusedColor,
+    },
+    // focused color for input with variant='outlined'
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderColor: focusedColor,
+      },
+    },
+  },
 }));
 
 export default function PersistentDrawerLeft() {
@@ -88,6 +121,7 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   let history = useHistory();
+  const [currentColor, setcurrentColor] = useState("red");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,6 +133,10 @@ export default function PersistentDrawerLeft() {
 
   const gotoPalettes = () => {
     history.push("/palettes");
+  };
+
+  const handleColorChange = (newColor) => {
+    setcurrentColor(newColor);
   };
 
   return (
@@ -135,6 +173,7 @@ export default function PersistentDrawerLeft() {
           </div>
         </Toolbar>
       </AppBar>
+      {/* Drawer */}
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -146,14 +185,32 @@ export default function PersistentDrawerLeft() {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
+        {/* header */}
+        <Typography
+          variant="h6"
+          style={{ textAlign: "center", marginTop: "1rem" }}
+        >
+          Pick A Color
+        </Typography>
+
+        {/* color picker */}
+        <div className={classes.colorpicker}>
+          <ChromePicker color={currentColor} onChange={handleColorChange} />
+        </div>
+
+        {/* Name of color */}
+        <div className={classes.colName}>
+          <TextField
+            id="name"
+            label="Color Name"
+            fullWidth
+            className={classes.textField}
+          />
+        </div>
       </Drawer>
       <main
         className={clsx(classes.content, {

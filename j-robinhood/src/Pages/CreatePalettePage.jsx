@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1.5rem",
   },
   colName: {
-    marginTop: "2rem",
+    marginTop: "3rem",
     width: "75%",
     alignSelf: "center",
   },
@@ -114,6 +114,11 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  button: {
+    width: "75%",
+    alignSelf: "center",
+    marginTop: "2rem",
+  },
 }));
 
 export default function PersistentDrawerLeft() {
@@ -122,6 +127,8 @@ export default function PersistentDrawerLeft() {
   const [open, setOpen] = React.useState(false);
   let history = useHistory();
   const [currentColor, setcurrentColor] = useState("red");
+  const [colorArray, setcolorArray] = useState([]);
+  const [colorName, setcolorName] = useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -138,6 +145,8 @@ export default function PersistentDrawerLeft() {
   const handleColorChange = (newColor) => {
     setcurrentColor(newColor);
   };
+
+  // console.log(colorName);
 
   return (
     <div className={classes.root}>
@@ -189,6 +198,18 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </div>
         <Divider />
+        {/* Clear palette button */}
+        <div className={classes.button}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginBottom: "3rem" }}
+            fullWidth
+          >
+            Remove Palette
+          </Button>
+        </div>
+
         {/* header */}
         <Typography
           variant="h6"
@@ -209,7 +230,16 @@ export default function PersistentDrawerLeft() {
             label="Color Name"
             fullWidth
             className={classes.textField}
+            value={colorName}
+            onChange={(e) => setcolorName(e.target.value)}
           />
+        </div>
+
+        {/* add color button  */}
+        <div className={classes.button}>
+          <Button className={classes.btn} variant="outlined" fullWidth>
+            Add Color
+          </Button>
         </div>
       </Drawer>
       <main

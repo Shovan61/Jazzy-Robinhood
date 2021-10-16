@@ -7,6 +7,7 @@ import Skills from "./Skills";
 import Footer from "./Footer";
 import MiniColorPalette from "./MiniColorPalette";
 import PaletteColorBox from "./PaletteColorBox";
+import CreatePaletteColorBox from "./CreatePaletteColorBox";
 
 export {
   NavBar,
@@ -18,4 +19,5 @@ export {
   Footer,
   MiniColorPalette,
   PaletteColorBox,
+  CreatePaletteColorBox,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -14,6 +14,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { ChromePicker } from "react-color";
 import TextField from "@material-ui/core/TextField";
+import { v4 as uuid } from "uuid";
+import { CreatePaletteColorBox } from "../Components";
 
 const drawerWidth = 300;
 const focusedColor = "var(--green)";
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    height: "7vh",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -95,29 +98,36 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
   },
   textField: {
-    // input label when focused
-    "& label.Mui-focused": {
-      color: focusedColor,
-    },
-    // focused color for input with variant='standard'
-    "& .MuiInput-underline:after": {
-      borderBottomColor: focusedColor,
-    },
-    // focused color for input with variant='filled'
-    "& .MuiFilledInput-underline:after": {
-      borderBottomColor: focusedColor,
-    },
-    // focused color for input with variant='outlined'
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: focusedColor,
-      },
-    },
+    // // input label when focused
+    // "& label.Mui-focused": {
+    //   color: focusedColor,
+    // },
+    // // focused color for input with variant='standard'
+    // "& .MuiInput-underline:after": {
+    //   borderBottomColor: focusedColor,
+    // },
+    // // focused color for input with variant='filled'
+    // "& .MuiFilledInput-underline:after": {
+    //   borderBottomColor: focusedColor,
+    // },
+    // // focused color for input with variant='outlined'
+    // "& .MuiOutlinedInput-root": {
+    //   "&.Mui-focused fieldset": {
+    //     borderColor: focusedColor,
+    //   },
+    // },
   },
   button: {
     width: "75%",
     alignSelf: "center",
     marginTop: "2rem",
+  },
+  paletteContainer: {
+    height: "93vh",
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "repeat(5, 1fr)",
+    gridTemplateRows: "repeat(4, 1fr)",
   },
 }));
 
@@ -129,6 +139,19 @@ export default function PersistentDrawerLeft() {
   const [currentColor, setcurrentColor] = useState("red");
   const [colorArray, setcolorArray] = useState([]);
   const [colorName, setcolorName] = useState("");
+  const [isDisabled, setisDisabled] = useState(false);
+
+  useEffect(() => {
+    checkColorName();
+  }, [colorName]);
+
+  const checkColorName = () => {
+    if (colorName === "") {
+      setisDisabled(true);
+    } else {
+      setisDisabled(false);
+    }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -143,10 +166,27 @@ export default function PersistentDrawerLeft() {
   };
 
   const handleColorChange = (newColor) => {
-    setcurrentColor(newColor);
+    setcurrentColor(newColor.hex);
   };
 
-  // console.log(colorName);
+  const handleAddColor = () => {
+    let colorObject = {
+      color: currentColor,
+      name: colorName,
+      id: uuid(),
+    };
+
+    if (colorArray.length <= 19) {
+      setcolorArray((prev) => {
+        return [...prev, colorObject];
+      });
+      setcolorName("");
+    } else {
+      setisDisabled(true);
+    }
+  };
+
+  console.log(colorName);
 
   return (
     <div className={classes.root}>
@@ -205,8 +245,9 @@ export default function PersistentDrawerLeft() {
             color="secondary"
             style={{ marginBottom: "3rem" }}
             fullWidth
+            onClick={() => setcolorArray([])}
           >
-            Remove Palette
+            Clear All
           </Button>
         </div>
 
@@ -237,7 +278,13 @@ export default function PersistentDrawerLeft() {
 
         {/* add color button  */}
         <div className={classes.button}>
-          <Button className={classes.btn} variant="outlined" fullWidth>
+          <Button
+            className={classes.btn}
+            variant="outlined"
+            fullWidth
+            onClick={handleAddColor}
+            disabled={isDisabled}
+          >
             Add Color
           </Button>
         </div>
@@ -250,6 +297,12 @@ export default function PersistentDrawerLeft() {
         <div className={classes.drawerHeader} />
 
         {/* body */}
+
+        <div className={classes.paletteContainer}>
+          {colorArray.map((cur) => (
+            <CreatePaletteColorBox {...cur} key={cur.id} />
+          ))}
+        </div>
       </main>
     </div>
   );

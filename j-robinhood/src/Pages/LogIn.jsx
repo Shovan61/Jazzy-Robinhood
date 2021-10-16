@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import logo from "../Images/hatlogo.png";
-import security from "../Images/security new.png";
+import security from "../Images/colors2.png";
 import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";

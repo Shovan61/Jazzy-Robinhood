@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import logo from "../Images/hatlogo.png";
-import security from "../Images/security.12dff459.png";
+import security from "../Images/security new.png";
 import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -13,10 +13,9 @@ const focusedColor = "var(--green)";
 const useStyles = makeStyles({
   root: {
     width: "100%",
-    height: "100%",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
-    minHeight: "100vh",
   },
   logoHeader: {
     marginLeft: "0.5rem",
@@ -48,7 +47,7 @@ const useStyles = makeStyles({
   },
   container: {
     alignSelf: "center",
-    marginTop: "3rem",
+    // marginTop: "3rem",
     maxWidth: "1287px",
     display: "flex",
     justifyContent: "space-around",
@@ -99,8 +98,8 @@ const useStyles = makeStyles({
     textAlign: "center",
     width: "40%",
     "& img": {
-      height: "40%",
-      marginBottom: "3rem",
+      height: "25%",
+      marginBottom: "2rem",
     },
   },
   footer: {

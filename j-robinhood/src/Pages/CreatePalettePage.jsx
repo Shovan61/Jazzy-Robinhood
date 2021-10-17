@@ -129,7 +129,19 @@ export default function PersistentDrawerLeft() {
       setisError(false);
       setcurrentColor("#FF0000");
     }
+  }, []);
+
+  useEffect(() => {
+    if (!colorArray.length) {
+      setisSameColor(false);
+      setisDisabled(false);
+      setisError(false);
+      setcurrentColor("#FF0000");
+    }
   }, [colorArray]);
+
+  // color name check
+  useEffect(() => {}, [currentColor]);
 
   useEffect(() => {
     colorValidator();
@@ -184,25 +196,18 @@ export default function PersistentDrawerLeft() {
   const colorNameValidator = () => {
     let allColorNames = colorArray.map((cur) => cur.name);
 
-    allColorNames.forEach((cur) => {
-      if (cur.toLowerCase().trim() === colorName.toLowerCase().trim()) {
-        setisError(true);
-      } else {
-        setisError(false);
-      }
-    });
+    let found = allColorNames.find(
+      (cur) => cur.toLowerCase().trim() === colorName.toLowerCase().trim()
+    );
+
+    found ? setisError(true) : setisError(false);
   };
 
   const colorValidator = () => {
     let allColors = colorArray.map((cur) => cur.color);
 
-    allColors.forEach((cur) => {
-      if (cur === currentColor) {
-        setisSameColor(true);
-      } else {
-        setisSameColor(false);
-      }
-    });
+    let found = allColors.find((cur) => cur === currentColor);
+    found ? setisSameColor(true) : setisSameColor(false);
   };
 
   const removeColor = (id) => {

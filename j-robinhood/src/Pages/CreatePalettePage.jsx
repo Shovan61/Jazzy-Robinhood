@@ -138,6 +138,7 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   let history = useHistory();
+  const { paletteBox } = useGlobalContext();
   const [currentColor, setcurrentColor] = useState("#FF0000");
   const [colorArray, setcolorArray] = useState([]);
   const [colorName, setcolorName] = useState("");
@@ -146,6 +147,8 @@ export default function PersistentDrawerLeft() {
   const [isSameColor, setisSameColor] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [paletteName, setpaletteName] = useState("");
+  const [isPaletteNameError, setisPaletteNameError] = useState(false);
+  const [isEmojiBtnDisabled, setisEmojiBtnDisabled] = useState(true);
 
   useEffect(() => {
     if (!colorArray.length) {
@@ -167,6 +170,11 @@ export default function PersistentDrawerLeft() {
   }, [colorArray]);
 
   useEffect(() => {
+    paletteNameValidator();
+    checkPaletteNameEmpty();
+  }, [paletteName]);
+
+  useEffect(() => {
     colorValidator();
   }, [currentColor, colorArray]);
 
@@ -174,6 +182,14 @@ export default function PersistentDrawerLeft() {
     checkColorName();
     colorNameValidator();
   }, [colorName]);
+
+  const checkPaletteNameEmpty = () => {
+    if (paletteName === "") {
+      setisEmojiBtnDisabled(true);
+    } else {
+      setisEmojiBtnDisabled(false);
+    }
+  };
 
   const checkColorName = () => {
     if (colorName === "") {
@@ -239,7 +255,16 @@ export default function PersistentDrawerLeft() {
     setcolorArray(newColorArray);
   };
 
-  const paletteNameValidator = () => {};
+  const paletteNameValidator = () => {
+    let allNames = paletteBox.map((cur) =>
+      cur.paletteName.split(" ").join("").toLowerCase().trim()
+    );
+    let nowName = paletteName.split(" ").join("").toLowerCase().trim();
+
+    let found = allNames.find((curName) => curName === nowName);
+
+    found ? setisPaletteNameError(true) : setisPaletteNameError(false);
+  };
 
   const clearAll = () => {
     setcolorArray([]);
@@ -262,7 +287,7 @@ export default function PersistentDrawerLeft() {
     setisModalOpen(false);
   };
 
-  // console.log(isDisabled);
+  // console.log(paletteName);
 
   return (
     <div className={classes.root}>
@@ -428,9 +453,12 @@ export default function PersistentDrawerLeft() {
                 Save Your Palette
               </h2>
               <TextField
+                error={isPaletteNameError}
                 type="text"
                 id="palette-name"
-                label="Palette Name"
+                label={
+                  isPaletteNameError ? "Name Already Taken" : "Palette Name"
+                }
                 fullWidth
                 className={classes.textField}
                 value={paletteName}
@@ -440,6 +468,7 @@ export default function PersistentDrawerLeft() {
               <Button
                 variant="outlined"
                 className={classes.btn}
+                disabled={isPaletteNameError || isEmojiBtnDisabled}
                 style={{
                   position: "absolute",
                   bottom: "8px",

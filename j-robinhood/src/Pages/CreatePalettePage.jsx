@@ -140,9 +140,6 @@ export default function PersistentDrawerLeft() {
     }
   }, [colorArray]);
 
-  // color name check
-  useEffect(() => {}, [currentColor]);
-
   useEffect(() => {
     colorValidator();
   }, [currentColor, colorArray]);
@@ -254,7 +251,7 @@ export default function PersistentDrawerLeft() {
           </IconButton>
           <div className={classes.navContent}>
             <Typography variant="h6" noWrap>
-              Create Palette
+              {open ? " Create Palette" : "Click Open"}
             </Typography>
             <Button
               className={classes.btn}

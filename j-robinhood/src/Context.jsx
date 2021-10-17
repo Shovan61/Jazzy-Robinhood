@@ -7,6 +7,7 @@ const GlobalContext = React.createContext();
 export const GlobalProvider = ({ children }) => {
   const [state, setstate] = useState({
     paletteBox: [],
+    defaultColor: [],
     isFilledBox: false,
     currentClickedColor: null,
   });
@@ -17,6 +18,10 @@ export const GlobalProvider = ({ children }) => {
         return {
           ...prev,
           paletteBox: [...prev.paletteBox, generatePalette(defaultColor[0])],
+          defaultColor: [
+            ...prev.defaultColor,
+            generatePalette(defaultColor[0]),
+          ],
           isFilledBox: true,
         };
       });

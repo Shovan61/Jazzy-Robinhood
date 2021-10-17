@@ -17,6 +17,10 @@ import TextField from "@material-ui/core/TextField";
 import { v4 as uuid } from "uuid";
 import { CreatePaletteList } from "../Components";
 import { arrayMoveImmutable } from "array-move";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import { useGlobalContext } from "../Context";
 
 const drawerWidth = 300;
 const focusedColor = "var(--green)";
@@ -98,7 +102,9 @@ const useStyles = makeStyles((theme) => ({
     width: "75%",
     alignSelf: "center",
   },
-  textField: {},
+  textField: {
+    marginBottom: "3rem",
+  },
   button: {
     width: "75%",
     alignSelf: "center",
@@ -107,6 +113,23 @@ const useStyles = makeStyles((theme) => ({
   paletteContainer: {
     height: "93vh",
     width: "100%",
+  },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    borderRadius: "8px",
+    padding: theme.spacing(2, 4, 3),
+    minHeight: "30vh",
+    minWidth: "40vw",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    position: "relative",
   },
 }));
 
@@ -121,20 +144,23 @@ export default function PersistentDrawerLeft() {
   const [isDisabled, setisDisabled] = useState(false);
   const [isError, setisError] = useState(false);
   const [isSameColor, setisSameColor] = useState(false);
+  const [isModalOpen, setisModalOpen] = useState(false);
+  const [paletteName, setpaletteName] = useState("");
 
   useEffect(() => {
     if (!colorArray.length) {
       setisSameColor(false);
-      setisDisabled(false);
+      setisDisabled(true);
       setisError(false);
       setcurrentColor("#FF0000");
+      checkColorName();
     }
   }, []);
 
   useEffect(() => {
     if (!colorArray.length) {
       setisSameColor(false);
-      setisDisabled(false);
+      setisDisabled(true);
       setisError(false);
       setcurrentColor("#FF0000");
     }
@@ -213,9 +239,10 @@ export default function PersistentDrawerLeft() {
     setcolorArray(newColorArray);
   };
 
+  const paletteNameValidator = () => {};
+
   const clearAll = () => {
     setcolorArray([]);
-    setisDisabled(false);
     setisError(false);
     setisSameColor(false);
     setcurrentColor("#FF0000");
@@ -227,7 +254,15 @@ export default function PersistentDrawerLeft() {
     });
   };
 
-  // console.log(currentColor);
+  const handleModaleOpen = () => {
+    setisModalOpen(true);
+  };
+
+  const handleModaleClose = () => {
+    setisModalOpen(false);
+  };
+
+  // console.log(isDisabled);
 
   return (
     <div className={classes.root}>
@@ -253,13 +288,27 @@ export default function PersistentDrawerLeft() {
             <Typography variant="h6" noWrap>
               {open ? " Create Palette" : "Click Open"}
             </Typography>
-            <Button
-              className={classes.btn}
-              variant="outlined"
-              onClick={gotoPalettes}
-            >
-              Back
-            </Button>
+            <div>
+              {colorArray.length > 0 && (
+                <Button
+                  className={classes.btn}
+                  variant="outlined"
+                  style={{ marginRight: "2rem" }}
+                  disabled={!colorArray.length}
+                  onClick={handleModaleOpen}
+                >
+                  Save Palette
+                </Button>
+              )}
+
+              <Button
+                className={classes.btn}
+                variant="outlined"
+                onClick={gotoPalettes}
+              >
+                Back
+              </Button>
+            </div>
           </div>
         </Toolbar>
       </AppBar>
@@ -325,7 +374,6 @@ export default function PersistentDrawerLeft() {
             id="name"
             label={isError ? "Name already taken" : "Color Name"}
             fullWidth
-            className={classes.textField}
             value={colorName}
             onChange={(e) => setcolorName(e.target.value)}
           />
@@ -361,6 +409,49 @@ export default function PersistentDrawerLeft() {
             axis="xy"
           />
         </div>
+
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          onClose={handleModaleClose}
+          open={isModalOpen}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={isModalOpen}>
+            <div className={classes.paper}>
+              <h2 id="transition-modal-title" style={{ marginBottom: "4rem" }}>
+                Save Your Palette
+              </h2>
+              <TextField
+                type="text"
+                id="palette-name"
+                label="Palette Name"
+                fullWidth
+                className={classes.textField}
+                value={paletteName}
+                onChange={(e) => setpaletteName(e.target.value)}
+              />
+
+              <Button
+                variant="outlined"
+                className={classes.btn}
+                style={{
+                  position: "absolute",
+                  bottom: "8px",
+                  right: "8px",
+                  marginTop: "2rem",
+                }}
+              >
+                Choose Emoji
+              </Button>
+            </div>
+          </Fade>
+        </Modal>
       </main>
     </div>
   );

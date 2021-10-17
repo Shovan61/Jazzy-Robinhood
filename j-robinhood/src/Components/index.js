@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import MiniColorPalette from "./MiniColorPalette";
 import PaletteColorBox from "./PaletteColorBox";
 import CreatePaletteColorBox from "./CreatePaletteColorBox";
+import CreatePaletteList from "./CreatePaletteList";
 
 export {
   NavBar,
@@ -20,4 +21,5 @@ export {
   MiniColorPalette,
   PaletteColorBox,
   CreatePaletteColorBox,
+  CreatePaletteList,
 };

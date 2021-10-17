@@ -3,17 +3,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import chroma from "chroma-js";
+import { SortableElement } from "react-sortable-hoc";
 
 const useStyles = makeStyles({
   root: {
     position: "relative",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
     cursor: "grab",
     "&:active": {
       cursor: "grabbing",
     },
+    // height: "200px",
+    // width: "200px",
+  },
+  name: {
+    position: "absolute",
+    bottom: "5px",
+    left: "5px",
   },
   color: {
     position: "absolute",
@@ -39,7 +44,9 @@ function CreatePaletteColorBox({ name, id, color, removeColor }) {
 
   return (
     <div className={classes.root} style={{ backgroundColor: color }}>
-      <span style={{ color: backgroundColor }}>{name}</span>
+      <span style={{ color: backgroundColor }} className={classes.name}>
+        {name}
+      </span>
       <span className={classes.color} style={{ color: backgroundColor }}>
         {color}
       </span>
@@ -53,4 +60,4 @@ function CreatePaletteColorBox({ name, id, color, removeColor }) {
   );
 }
 
-export default CreatePaletteColorBox;
+export default SortableElement(CreatePaletteColorBox);

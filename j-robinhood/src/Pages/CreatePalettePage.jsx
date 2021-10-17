@@ -15,7 +15,8 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { ChromePicker } from "react-color";
 import TextField from "@material-ui/core/TextField";
 import { v4 as uuid } from "uuid";
-import { CreatePaletteColorBox } from "../Components";
+import { CreatePaletteList } from "../Components";
+import { arrayMoveImmutable } from "array-move";
 
 const drawerWidth = 300;
 const focusedColor = "var(--green)";
@@ -97,26 +98,7 @@ const useStyles = makeStyles((theme) => ({
     width: "75%",
     alignSelf: "center",
   },
-  textField: {
-    // // input label when focused
-    // "& label.Mui-focused": {
-    //   color: focusedColor,
-    // },
-    // // focused color for input with variant='standard'
-    // "& .MuiInput-underline:after": {
-    //   borderBottomColor: focusedColor,
-    // },
-    // // focused color for input with variant='filled'
-    // "& .MuiFilledInput-underline:after": {
-    //   borderBottomColor: focusedColor,
-    // },
-    // // focused color for input with variant='outlined'
-    // "& .MuiOutlinedInput-root": {
-    //   "&.Mui-focused fieldset": {
-    //     borderColor: focusedColor,
-    //   },
-    // },
-  },
+  textField: {},
   button: {
     width: "75%",
     alignSelf: "center",
@@ -125,9 +107,6 @@ const useStyles = makeStyles((theme) => ({
   paletteContainer: {
     height: "93vh",
     width: "100%",
-    display: "grid",
-    gridTemplateColumns: "repeat(5, 1fr)",
-    gridTemplateRows: "repeat(4, 1fr)",
   },
 }));
 
@@ -136,12 +115,21 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   let history = useHistory();
-  const [currentColor, setcurrentColor] = useState("red");
+  const [currentColor, setcurrentColor] = useState("#FF0000");
   const [colorArray, setcolorArray] = useState([]);
   const [colorName, setcolorName] = useState("");
   const [isDisabled, setisDisabled] = useState(false);
   const [isError, setisError] = useState(false);
   const [isSameColor, setisSameColor] = useState(false);
+
+  useEffect(() => {
+    if (!colorArray.length) {
+      setisSameColor(false);
+      setisDisabled(false);
+      setisError(false);
+      setcurrentColor("#FF0000");
+    }
+  }, [colorArray]);
 
   useEffect(() => {
     colorValidator();
@@ -223,6 +211,20 @@ export default function PersistentDrawerLeft() {
     setcolorArray(newColorArray);
   };
 
+  const clearAll = () => {
+    setcolorArray([]);
+    setisDisabled(false);
+    setisError(false);
+    setisSameColor(false);
+    setcurrentColor("#FF0000");
+  };
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setcolorArray((prev) => {
+      return arrayMoveImmutable(prev, oldIndex, newIndex);
+    });
+  };
+
   // console.log(currentColor);
 
   return (
@@ -282,7 +284,7 @@ export default function PersistentDrawerLeft() {
             color="secondary"
             style={{ marginBottom: "3rem" }}
             fullWidth
-            onClick={() => setcolorArray([])}
+            onClick={clearAll}
           >
             Clear All
           </Button>
@@ -350,13 +352,12 @@ export default function PersistentDrawerLeft() {
         {/* body */}
 
         <div className={classes.paletteContainer}>
-          {colorArray.map((cur) => (
-            <CreatePaletteColorBox
-              {...cur}
-              key={cur.id}
-              removeColor={removeColor}
-            />
-          ))}
+          <CreatePaletteList
+            onSortEnd={onSortEnd}
+            colorArray={colorArray}
+            removeColor={removeColor}
+            axis="xy"
+          />
         </div>
       </main>
     </div>

@@ -37,7 +37,6 @@ function MiniColorPalette(props) {
   const classes = useStyles();
   const { paletteName, id, emoji, colors } = props;
   let history = useHistory();
-  console.log(props);
 
   const gotoPalettePage = () => {
     history.push(`/palette/${id}`);

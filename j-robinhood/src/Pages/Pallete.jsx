@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import Slider from "@material-ui/core/Slider";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import { motion } from "framer-motion";
 
 const useStyles = makeStyles({
   root: {
@@ -107,8 +108,14 @@ function Pallete() {
   if (!isFilledBox) {
     return <div>...Loading</div>;
   } else {
+    console.log(singleShade);
     return (
-      <div className={classes.root}>
+      <motion.div
+        className={classes.root}
+        exit={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+      >
         <nav className={classes.nav}>
           <div className={classes.icon}>
             <IconButton>{palette.emoji}</IconButton>
@@ -161,7 +168,7 @@ function Pallete() {
         <div className={classes.footer}>
           <Footer />
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

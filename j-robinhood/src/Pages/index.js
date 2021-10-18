@@ -4,6 +4,7 @@ import PalletesPage from "./PalletesPage";
 import Pallete from "./Pallete";
 import ColorShadePage from "./ColorShadePage";
 import CreatePalettePage from "./CreatePalettePage";
+import ErrorPage from "./ErrorPage";
 
 export {
   Home,
@@ -12,4 +13,5 @@ export {
   Pallete,
   ColorShadePage,
   CreatePalettePage,
+  ErrorPage,
 };

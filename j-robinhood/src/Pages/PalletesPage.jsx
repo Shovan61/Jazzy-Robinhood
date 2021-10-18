@@ -9,6 +9,7 @@ import { Footer } from "../Components";
 import Card from "@material-ui/core/Card";
 import { useGlobalContext } from "../Context";
 import { MiniColorPalette } from "../Components";
+import { motion } from "framer-motion";
 
 const useStyles = makeStyles({
   root: {
@@ -118,11 +119,16 @@ function PalletesPage() {
   };
 
   return (
-    <div className={classes.root}>
+    <motion.div
+      className={classes.root}
+      exit={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+    >
       <div className={classes.nav}>
         <div className={classes.search}>
           <img src={logo} alt="logo" onClick={gotoHome} />
-          <Typography variant="h7">Jazzy Robinhood</Typography>
+          <Typography>Jazzy Robinhood</Typography>
         </div>
         <Button
           className={classes.btnCreate}
@@ -160,7 +166,7 @@ function PalletesPage() {
       <div className={classes.footer}>
         <Footer />
       </div>
-    </div>
+    </motion.div>
   );
 }
 

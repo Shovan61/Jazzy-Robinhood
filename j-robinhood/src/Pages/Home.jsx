@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import InfoIcon from "@material-ui/icons/Info";
+import { motion } from "framer-motion";
 import Typography from "@material-ui/core/Typography";
 import { NavBar, Hero, About, Usage, Skills, Footer } from "../Components";
 
@@ -23,7 +23,12 @@ const useStyles = makeStyles({
 function Home() {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <motion.div
+      className={classes.root}
+      exit={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+    >
       <NavBar />
       <Hero />
       <About />
@@ -38,7 +43,7 @@ function Home() {
         </Typography>
       </div>
       <Footer />
-    </div>
+    </motion.div>
   );
 }
 

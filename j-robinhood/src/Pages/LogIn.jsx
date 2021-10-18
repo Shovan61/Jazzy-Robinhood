@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Footer } from "../Components";
+import { motion } from "framer-motion";
 
 const focusedColor = "var(--green)";
 
@@ -130,7 +131,12 @@ function LogIn() {
   };
 
   return (
-    <div className={classes.root}>
+    <motion.div
+      className={classes.root}
+      exit={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+    >
       <div className={classes.nav}>
         <div className={classes.navContent} onClick={gotoHome}>
           <img src={logo} alt="logo" />
@@ -208,7 +214,7 @@ function LogIn() {
       <div className={classes.footer}>
         <Footer />
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -4,13 +4,28 @@ import { generatePalette } from "./colorHelper";
 
 const GlobalContext = React.createContext();
 
+const getItemsLocalStorage = () => {
+  let palettes = JSON.parse(window.localStorage.getItem("palettes"));
+
+  if (palettes) {
+    return palettes;
+  } else {
+    return [];
+  }
+};
+
 export const GlobalProvider = ({ children }) => {
   const [state, setstate] = useState({
-    paletteBox: [],
+    paletteBox: getItemsLocalStorage(),
     defaultColor: [],
-    isFilledBox: false,
+    isFilledBox: true,
     currentClickedColor: null,
   });
+  console.log(getItemsLocalStorage());
+  console.log(state.paletteBox);
+  useEffect(() => {
+    window.localStorage.setItem("palettes", JSON.stringify(state.paletteBox));
+  }, [state.paletteBox]);
 
   useEffect(() => {
     if (state.paletteBox.length === 0) {
@@ -22,11 +37,12 @@ export const GlobalProvider = ({ children }) => {
             ...prev.defaultColor,
             generatePalette(defaultColor[0]),
           ],
-          isFilledBox: true,
         };
       });
     }
   }, []);
+
+  console.log(state.isFilledBox);
 
   const setCurrentColor = (color, name, paletteId) => {
     let info = {

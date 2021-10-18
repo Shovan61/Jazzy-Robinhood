@@ -22,6 +22,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 import { useGlobalContext } from "../Context";
+import { motion } from "framer-motion";
 
 const drawerWidth = 300;
 const focusedColor = "var(--green)";
@@ -319,7 +320,12 @@ export default function PersistentDrawerLeft() {
   // console.log(chosenEmoji);
 
   return (
-    <div className={classes.root}>
+    <motion.div
+      className={classes.root}
+      exit={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+    >
       <CssBaseline />
       <AppBar
         color="inherit"
@@ -541,6 +547,6 @@ export default function PersistentDrawerLeft() {
           </Fade>
         </Modal>
       </main>
-    </div>
+    </motion.div>
   );
 }

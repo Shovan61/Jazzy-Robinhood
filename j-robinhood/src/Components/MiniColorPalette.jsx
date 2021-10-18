@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { useGlobalContext } from "../Context";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     width: "250px",
     height: "200px",
@@ -45,19 +42,7 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
     boxShadow: "0.1rem 0.1rem 0.2rem #ddd, -0.1rem -0.1rem 0.2rem #eee",
   },
-  iconEdit: {
-    borderRadius: "20%",
-    position: "absolute",
-    top: "0",
-    right: "40px",
-    zIndex: "10",
-    cursor: "pointer",
-    backgroundColor: "red",
-    padding: "4px",
-    display: "none",
-    fontSize: "25px",
-    color: "white",
-  },
+
   iconRemove: {
     borderRadius: "20%",
     position: "absolute",
@@ -71,33 +56,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "25px",
     color: "white",
   },
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+});
 
 function MiniColorPalette(props) {
   const classes = useStyles();
   const { deletePalette } = useGlobalContext();
   const { paletteName, id, emoji, colors } = props;
   let history = useHistory();
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const gotoPalettePage = () => {
     history.push(`/palette/${id}`);
@@ -105,7 +70,6 @@ function MiniColorPalette(props) {
 
   const handleDelete = (e) => {
     e.stopPropagation();
-
     deletePalette(id);
   };
 
@@ -122,8 +86,6 @@ function MiniColorPalette(props) {
       </div>
       {id !== "material-ui-colors" && (
         <>
-          <EditIcon className={classes.iconEdit} />
-
           <DeleteIcon
             className={classes.iconRemove}
             onClick={(e) => handleDelete(e)}
@@ -135,27 +97,6 @@ function MiniColorPalette(props) {
         <span style={{ fontSize: "14px" }}>{paletteName}</span>
         <span>{emoji}</span>
       </div>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">
-              react-transition-group animates me.
-            </p>
-          </div>
-        </Fade>
-      </Modal>
     </Card>
   );
 }

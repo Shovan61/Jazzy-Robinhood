@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import chroma from "chroma-js";
 import { Typography } from "@material-ui/core";
+import { motion } from "framer-motion";
 
 const useStyles = makeStyles({
   root: {
@@ -81,7 +82,12 @@ function ColorShadePage() {
     return <span>...Loading</span>;
   } else {
     return (
-      <div className={classes.root}>
+      <motion.div
+        className={classes.root}
+        exit={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+      >
         <nav className={classes.nav}>
           <Typography variant="h6">{colorName}</Typography>
 
@@ -112,7 +118,7 @@ function ColorShadePage() {
         <div className={classes.footer}>
           <Footer />
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

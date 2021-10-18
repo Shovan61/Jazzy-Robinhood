@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { services } from "../utilities";
 import { makeStyles } from "@material-ui/core/styles";
 import GuySvg from "./GuySvg";
+import ReactPlayer from "react-player";
 
 const useStyles = makeStyles({
   root: {
@@ -111,7 +112,9 @@ function Usage() {
           <Typography variant="h4">How To Use</Typography>
           <div className={classes.line} />
         </div>
-        <div className={classes.rightHowto}>{/* Video Content */}</div>
+        <div className={classes.rightHowto}>
+          <ReactPlayer url="https://www.youtube.com/watch?v=dyXerBBomNc&ab_channel=shovanmazumder" />
+        </div>
       </div>
     </div>
   );

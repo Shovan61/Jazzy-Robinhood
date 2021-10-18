@@ -87,10 +87,10 @@ const useStyles = makeStyles({
     marginTop: "3rem",
   },
   boxContainer: {
-    width: "70%",
-    // border: "1px solid black",
+    width: "95%",
     display: "grid",
-    gridTemplateColumns: "repeat(3, 33%)",
+    gridTemplateColumns: "repeat(4, 25%)",
+
     gap: "10px",
   },
   favorite: {
@@ -154,7 +154,7 @@ function PalletesPage() {
             <MiniColorPalette key={cur.id} {...cur} />
           ))}
         </div>
-        <Card className={classes.favorite}></Card>
+        {/* <Card className={classes.favorite}></Card> */}
       </div>
 
       <div className={classes.footer}>

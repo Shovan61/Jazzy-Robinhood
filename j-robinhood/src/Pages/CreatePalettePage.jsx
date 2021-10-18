@@ -306,6 +306,7 @@ export default function PersistentDrawerLeft() {
     setcolorArray([]);
     setpaletteName("");
     handleModaleClose();
+    gotoPalettes();
   };
 
   const handleSaveCancalation = () => {

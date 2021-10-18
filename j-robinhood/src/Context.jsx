@@ -47,6 +47,17 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
+  const deletePalette = (id) => {
+    setstate((prev) => {
+      return {
+        ...prev,
+        paletteBox: prev.paletteBox.filter(
+          (curPalette) => curPalette.id !== id
+        ),
+      };
+    });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -55,6 +66,7 @@ export const GlobalProvider = ({ children }) => {
         setCurrentColor,
         currentClickedColor: state.currentClickedColor,
         addPalette,
+        deletePalette,
       }}
     >
       {children}

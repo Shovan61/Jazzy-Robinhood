@@ -118,6 +118,8 @@ function Pallete() {
             <span>Level:</span>
             <Slider
               defaultValue={level}
+              // key={`slider-${level}`}
+              aria-labelledby="continuous-slider"
               step={100}
               min={100}
               max={900}

@@ -20,6 +20,7 @@ import { arrayMoveImmutable } from "array-move";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 import { useGlobalContext } from "../Context";
 
 const drawerWidth = 300;
@@ -138,7 +139,7 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   let history = useHistory();
-  const { paletteBox } = useGlobalContext();
+  const { paletteBox, addPalette } = useGlobalContext();
   const [currentColor, setcurrentColor] = useState("#FF0000");
   const [colorArray, setcolorArray] = useState([]);
   const [colorName, setcolorName] = useState("");
@@ -149,6 +150,8 @@ export default function PersistentDrawerLeft() {
   const [paletteName, setpaletteName] = useState("");
   const [isPaletteNameError, setisPaletteNameError] = useState(false);
   const [isEmojiBtnDisabled, setisEmojiBtnDisabled] = useState(true);
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [isEmojiPickerOpen, setisEmojiPickerOpen] = useState(false);
 
   useEffect(() => {
     if (!colorArray.length) {
@@ -287,7 +290,32 @@ export default function PersistentDrawerLeft() {
     setisModalOpen(false);
   };
 
-  // console.log(paletteName);
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+    const emoji = emojiObject.emoji;
+    // let emoji = chosenEmoji ? chosenEmoji.emoji : "😆";
+    let newPalette = {
+      paletteName: paletteName,
+      id: uuid(),
+      emoji,
+      colors: colorArray,
+    };
+
+    addPalette(newPalette);
+    setChosenEmoji(null);
+    setcolorArray([]);
+    setpaletteName("");
+    handleModaleClose();
+  };
+
+  const handleSaveCancalation = () => {
+    handleModaleClose();
+    setpaletteName("");
+    setChosenEmoji(null);
+    setisEmojiPickerOpen(false);
+  };
+
+  // console.log(chosenEmoji);
 
   return (
     <div className={classes.root}>
@@ -449,35 +477,65 @@ export default function PersistentDrawerLeft() {
         >
           <Fade in={isModalOpen}>
             <div className={classes.paper}>
-              <h2 id="transition-modal-title" style={{ marginBottom: "4rem" }}>
-                Save Your Palette
-              </h2>
-              <TextField
-                error={isPaletteNameError}
-                type="text"
-                id="palette-name"
-                label={
-                  isPaletteNameError ? "Name Already Taken" : "Palette Name"
-                }
-                fullWidth
-                className={classes.textField}
-                value={paletteName}
-                onChange={(e) => setpaletteName(e.target.value)}
-              />
+              {isEmojiPickerOpen ? (
+                <div>
+                  <Picker
+                    onEmojiClick={onEmojiClick}
+                    skinTone={SKIN_TONE_MEDIUM_DARK}
+                    pickerStyle={{ height: "70vh" }}
+                  />
 
-              <Button
-                variant="outlined"
-                className={classes.btn}
-                disabled={isPaletteNameError || isEmojiBtnDisabled}
-                style={{
-                  position: "absolute",
-                  bottom: "8px",
-                  right: "8px",
-                  marginTop: "2rem",
-                }}
-              >
-                Choose Emoji
-              </Button>
+                  <Button
+                    variant="outlined"
+                    className={classes.btn}
+                    onClick={handleSaveCancalation}
+                    style={{
+                      position: "absolute",
+                      bottom: "8px",
+                      right: "8px",
+                      marginTop: "2rem",
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              ) : (
+                <div style={{ height: "100%", width: "100%" }}>
+                  <h2
+                    id="transition-modal-title"
+                    style={{ marginBottom: "4rem" }}
+                  >
+                    Save Your Palette
+                  </h2>
+                  <TextField
+                    error={isPaletteNameError}
+                    type="text"
+                    id="palette-name"
+                    label={
+                      isPaletteNameError ? "Name Already Taken" : "Palette Name"
+                    }
+                    fullWidth
+                    className={classes.textField}
+                    value={paletteName}
+                    onChange={(e) => setpaletteName(e.target.value)}
+                  />
+
+                  <Button
+                    variant="outlined"
+                    className={classes.btn}
+                    disabled={isPaletteNameError || isEmojiBtnDisabled}
+                    onClick={() => setisEmojiPickerOpen(true)}
+                    style={{
+                      position: "absolute",
+                      bottom: "8px",
+                      right: "8px",
+                      marginTop: "2rem",
+                    }}
+                  >
+                    Choose Emoji
+                  </Button>
+                </div>
+              )}
             </div>
           </Fade>
         </Modal>

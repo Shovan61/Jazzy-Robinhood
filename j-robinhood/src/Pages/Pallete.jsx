@@ -35,8 +35,9 @@ const useStyles = makeStyles({
   container: {
     width: "100%",
     height: "82vh",
-    display: "flex",
-    flexWrap: "wrap",
+    // display: "flex",
+    // flexWrap: "wrap",
+    // flexFlow: "row wrap",
   },
   btn: {
     border: "1px solid var(--green)",

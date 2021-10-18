@@ -38,6 +38,15 @@ export const GlobalProvider = ({ children }) => {
     window.localStorage.setItem("color", JSON.stringify(info));
   };
 
+  const addPalette = (newPalette) => {
+    setstate((prev) => {
+      return {
+        ...prev,
+        paletteBox: [...prev.paletteBox, generatePalette(newPalette)],
+      };
+    });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -45,6 +54,7 @@ export const GlobalProvider = ({ children }) => {
         isFilledBox: state.isFilledBox,
         setCurrentColor,
         currentClickedColor: state.currentClickedColor,
+        addPalette,
       }}
     >
       {children}

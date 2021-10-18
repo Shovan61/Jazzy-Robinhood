@@ -18,8 +18,8 @@ const useStyles = makeStyles({
   colorPalette: {
     height: "80%",
     width: "100%",
-    display: "grid",
-    gridTemplateColumns: "repeat(5, 1fr)",
+    // display: "grid",
+    // gridTemplateColumns: "repeat(5, 1fr)",
   },
   content: {
     height: "20%",
@@ -29,6 +29,10 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
   },
   colorBox: {
+    height: "25%",
+    width: "20%",
+    marginBottom: "-3px",
+    display: "inline-block",
     boxShadow: "0.1rem 0.1rem 0.2rem #ddd, -0.1rem -0.1rem 0.2rem #eee",
   },
 });

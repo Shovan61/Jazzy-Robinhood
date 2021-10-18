@@ -34,6 +34,7 @@ const useStyles = makeStyles({
     width: "100%",
     "& img": {
       height: "25%",
+      cursor: "pointer",
     },
   },
 
@@ -90,7 +91,7 @@ const useStyles = makeStyles({
     // border: "1px solid black",
     display: "grid",
     gridTemplateColumns: "repeat(3, 33%)",
-    gap: "5px",
+    gap: "10px",
   },
   favorite: {
     width: "25%",
@@ -120,8 +121,8 @@ function PalletesPage() {
     <div className={classes.root}>
       <div className={classes.nav}>
         <div className={classes.search}>
-          <img src={logo} alt="logo" />
-          <input type="text" className={classes.input} placeholder="Search" />
+          <img src={logo} alt="logo" onClick={gotoHome} />
+          <Typography variant="h7">Jazzy Robinhood</Typography>
         </div>
         <Button
           className={classes.btnCreate}

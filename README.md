@@ -33,17 +33,6 @@ cd jazzy-robinhood
 Install dependencies
 
 npm install
-# or
-yarn install
-
-
-Setup environment variables
-Create a .env.local file and add the following:
-
-DATABASE_URL=your_postgres_connection
-NEXT_PUBLIC_CLERK_FRONTEND_API=your_clerk_frontend_api
-CLERK_API_KEY=your_clerk_api_key
-
 
 Run development server
 

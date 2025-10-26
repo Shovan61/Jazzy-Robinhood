@@ -1,6 +1,8 @@
 🎨 Jazzy Robinhood
 ---------------------------------------------------------
 Jazzy Robinhood is a SaaS web app designed for front-end developers who want a fast, elegant, and collaborative way to pick, save, and manage their color palettes. Whether you're building a design system, prototyping, or just experimenting with shades, Jazzy Robinhood makes color workflow simple, beautiful, and efficient.
+
+DEMO: jazzy-robinhood.netlify.app/
 ---------------------------------------------------------
  Features
 
